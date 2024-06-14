@@ -1,5 +1,10 @@
 # Projeto de Análise e Simulação de Corridas da Fórmula E
-
+## Equipe responsável
+-Isadora de Morais Meneghetti (RM556326)
+-Júlio César Ruiz Zequin (RM554676)
+-Kaio Drago Lima Souza (RM556095)
+-Khadija do Rocio Vieira de Lima (RM558971)
+-Pedro Henrique Faim dos Santos (RM557440)
 Este projeto em Python coleta, processa e exibe dados sobre corridas da Fórmula E. O programa permite a inserção de dados de corridas, calcula a média de pontos das equipes, identifica o time vencedor e exibe os resultados de forma interativa.
 
 ## Funcionalidades
@@ -137,6 +142,8 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
 
 
 
