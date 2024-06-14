@@ -1,180 +1,70 @@
-# Simulador de Fórmula E
+# Projeto de Análise e Simulação de Corridas da Fórmula E
 
-Este é um jogo simples de corrida de Fórmula E desenvolvido em Python usando a biblioteca Pygame. O jogador controla um carro que deve desviar dos obstáculos em uma pista infinita, acumulando pontos à medida que evita os obstáculos.
+Este projeto em Python coleta, processa e exibe dados sobre corridas da Fórmula E. O programa permite a inserção de dados de corridas, calcula a média de pontos das equipes, identifica o time vencedor e exibe os resultados de forma interativa.
+
+## Funcionalidades
+
+- Coleta de dados de corridas da Fórmula E.
+- Cálculo da média de pontos das equipes.
+- Identificação do time vencedor.
+- Exibição dos resultados de cada corrida.
+- Menu interativo para adicionar corridas e visualizar resultados.
+
+## Estrutura do Projeto
+
+O projeto é composto por funções bem definidas que seguem boas práticas de programação. Abaixo está a estrutura das principais funções:
+
+- `get_race_data()`: Coleta os dados de uma corrida.
+- `calculate_average_points(race_data)`: Calcula a média de pontos de uma corrida.
+- `find_winning_team(race_data)`: Encontra o time com maior pontuação.
+- `display_results(race_data)`: Exibe os resultados de uma corrida.
+- `add_race()`: Adiciona uma nova corrida e exibe seus resultados.
+- `show_menu()`: Exibe o menu de opções do programa.
+- `main()`: Função principal que controla o fluxo do programa.
 
 ## Requisitos
 
 - Python 3.x
-- Pygame
 
-## Instalação
+## Como Executar
 
-1. **Clone este repositório** ou baixe os arquivos diretamente.
+1. Clone este repositório ou faça o download do arquivo `formula_e.py`.
+2. Execute o arquivo `formula_e.py`:
 
-2. **Instale as dependências** necessárias. Você pode usar `pip` para instalar Pygame:
-    ```bash
-    pip install pygame
-    ```
+```bash
+python formula_e.py
 
-3. **Adicione as imagens**:
-   - Certifique-se de ter duas imagens: `pista.png` (imagem da pista) e `carro.png` (imagem do carro).
-   - Coloque essas imagens no mesmo diretório onde o script Python (`main.py`) está localizado.
 
-## Como jogar
+Menu:
+1. Adicionar nova corrida
+2. Exibir todas as corridas
+3. Sair
+Escolha uma opção: 1
+Quantos times participaram da corrida? 3
+Nome do time 1: Equipe A
+Pontos do time Equipe A: 25
+Nome do time 2: Equipe B
+Pontos do time Equipe B: 18
+Nome do time 3: Equipe C
+Pontos do time Equipe C: 30
 
-1. **Execute o script Python**:
-    ```bash
-    python main.py
-    ```
+Resultados da Corrida:
+A média de pontos foi: 24.33
+O time vencedor foi: Equipe C com 30 pontos
 
-2. **Controles do jogo**:
-   - Use a tecla **esquerda** (`←`) para mover o carro para a esquerda.
-   - Use a tecla **direita** (`→`) para mover o carro para a direita.
+Menu:
+1. Adicionar nova corrida
+2. Exibir todas as corridas
+3. Sair
+Escolha uma opção: 2
 
-3. **Objetivo do jogo**:
-   - Desviar dos obstáculos que aparecem na pista.
-   - Acumular pontos à medida que o carro evita os obstáculos.
+Corrida 1:
+A média de pontos foi: 24.33
+O time vencedor foi: Equipe C com 30 pontos
 
-## Estrutura do código
-
-- `main.py`: Script principal que contém toda a lógica do jogo.
-- `pista.png`: Imagem de fundo da pista.
-- `carro.png`: Imagem do carro do jogador.
-
-## Exemplo de Código
-
-Aqui está um trecho do código principal:
-
-```python
-import pygame
-import random
-import os
-
-pygame.init()
-
-# Resolução da janela
-width = 800
-height = 600
-tamanho_tela = (width, height)
-tela = pygame.display.set_mode(tamanho_tela)
-pygame.display.set_caption('Simulador de Fórmula E')
-
-# Função para carregar imagem com tratamento de erro
-def carregar_imagem(caminho):
-    if not os.path.exists(caminho):
-        print(f"Erro: arquivo {caminho} não encontrado.")
-        pygame.quit()
-        exit()
-    try:
-        imagem = pygame.image.load(caminho)
-        return imagem
-    except pygame.error as e:
-        print(f"Erro ao carregar imagem {caminho}: {e}")
-        pygame.quit()
-        exit()
-
-# Caminho para as imagens (modifique conforme necessário)
-caminho_pista = os.path.join('C:\\Users\\Gamer\\Downloads\\vinheris\\GS-python\\static', 'pista.png')
-caminho_carro = os.path.join('C:\\Users\\Gamer\\Downloads\\vinheris\\GS-python\\static', 'carro.png')
-
-# Carregar imagens
-pista_img = carregar_imagem(caminho_pista)
-carro_img = carregar_imagem(caminho_carro)
-carro_img = pygame.transform.scale(carro_img, (50, 100))  # Redimensiona a imagem do carro
-
-# Configurações do funcionamento
-voce_perdeu = False
-speed = 5
-score = 0
-
-# Carro do jogador
-carro_width = 50
-carro_height = 100
-carro_x = width // 2 - carro_width // 2
-carro_y = height - carro_height - 20
-carro_velocidade = 10
-
-# Obstáculos
-obstaculos = []
-obstaculo_width = 50
-obstaculo_height = 100
-obstaculo_velocidade = 5
-
-# Função para gerar obstáculos
-def gerar_obstaculo():
-    x = random.randint(150, 650 - obstaculo_width)
-    y = -obstaculo_height
-    obstaculos.append([x, y])
-
-# Função para desenhar o carro
-def desenhar_carro(x, y):
-    tela.blit(carro_img, (x, y))
-
-# Função para desenhar os obstáculos
-def desenhar_obstaculos(obstaculos):
-    for obstaculo in obstaculos:
-        pygame.draw.rect(tela, (200, 0, 0), (obstaculo[0], obstaculo[1], obstaculo_width, obstaculo_height))
-
-# Função para exibir o score
-def mostrar_score(score):
-    font = pygame.font.Font(None, 36)
-    text = font.render("Score: " + str(score), True, (255, 255, 255))
-    tela.blit(text, (10, 10))
-
-# ------------------------------------------------------------------LOOP-----------------------------------------------------------------------
-tempo = pygame.time.Clock()
-fps = 60
-correndo = True
-
-while correndo:
-    tempo.tick(fps)
-
-    for evento in pygame.event.get():
-        if evento.type == pygame.QUIT:
-            correndo = False
-
-    # Movimento do carro
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_LEFT] and carro_x > 150:
-        carro_x -= carro_velocidade
-    if keys[pygame.K_RIGHT] and carro_x < 650 - carro_width:
-        carro_x += carro_velocidade
-
-    # Atualizar posição dos obstáculos
-    for obstaculo in obstaculos:
-        obstaculo[1] += obstaculo_velocidade
-
-    # Remover obstáculos fora da tela e incrementar score
-    for obstaculo in obstaculos:
-        if obstaculo[1] > height:
-            score += 1
-            obstaculos.remove(obstaculo)
-
-    # Gerar novos obstáculos
-    if random.randint(1, 60) == 1:
-        gerar_obstaculo()
-
-    # Verificar colisões
-    for obstaculo in obstaculos:
-        if (carro_y < obstaculo[1] + obstaculo_height and
-            carro_y + carro_height > obstaculo[1] and
-            carro_x < obstaculo[0] + obstaculo_width and
-            carro_x + carro_width > obstaculo[0]):
-            voce_perdeu = True
-            correndo = False
-
-    # Elementos (desenhos e atualizações)
-    # Desenhar pista
-    tela.blit(pista_img, (0, 0))
-
-    # Desenhar o carro e os obstáculos
-    desenhar_carro(carro_x, carro_y)
-    desenhar_obstaculos(obstaculos)
-    mostrar_score(score)
-
-    pygame.display.update()
-
-pygame.quit()
-
-if voce_perdeu:
-    print("Você perdeu! Seu score foi:", score)
+Menu:
+1. Adicionar nova corrida
+2. Exibir todas as corridas
+3. Sair
+Escolha uma opção: 3
+Saindo...
